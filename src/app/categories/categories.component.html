@@ -6,16 +6,56 @@
 
       <form class="form-inline text-center" #categoryForm = 'ngForm' (ngSubmit)="onSubmit(categoryForm)"> 
         <div class=" col-md-10">
-          <input type="text" name
-          = "category" class="form-control shadow-effect" placeholder="Add New Category" style="width: 100%; padding: 30px;" ngModel>
+          <input 
+          type="text" 
+          name = "category" 
+          class="form-control shadow-effect" placeholder="Add New Category" 
+          #newCategory = 'ngModel'
+          style="width: 100%; padding: 30px;" ngModel
+          required
+          [ngClass]= " {'is-invalid' : newCategory.touched && newCategory.invalid} "
+          >
+          <div class="alert alert-danger" *ngIf="newCategory.touched && newCategory.invalid">
+              Category feild is Reuired
+          </div>
             
         </div>
 
         <div class="col-md-2">
-            <button class="btn btn-block btn-info mb-1 btn-theme">Add Category</button>
+            <button class="btn btn-block btn-info mb-1 btn-theme" [disabled]= "categoryForm.invalid">Add Category</button>
 
         </div>
       </form>
     </div>
+  </div>
+  <div class="row mt-5 mb-5">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="card shadow-effect">
+        <div class="card-body">
+          <table class="table row-border hover">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Category</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let category of categoryArray; index as i '>
+                <td>{{i + 1}}</td>
+                <td>{{category.data.category}}</td>
+                <td>
+                  <button class="btn btn-sm btn-warning ">Edit</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3"></div>
+
   </div>
 </div>
