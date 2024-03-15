@@ -26,18 +26,37 @@ export class CategoriesService {
   }
 
   loadData() {
-    return  this.firestore
+    return this.firestore
       .collection('categories')
       .snapshotChanges()
       .pipe(
         map((actions) => {
-           return actions.map((a) => {
+          return actions.map((a) => {
             const data = a.payload.doc.data();
             const id = a.payload.doc.id;
 
-            return {id, data}
+            return { id, data };
           });
         })
       );
+  }
+
+  updateData(id, EditData) {
+    this.firestore
+      .doc(`categories/${id}`)
+      .update(EditData)
+      .then((docRef) => {
+        this.toastr.success('Data Updated Successfully!');
+      });
+  }
+
+  deleteData(id) {
+    this.firestore
+      .doc(`categories/${id}`)
+      .delete()
+      .then((docref) => {
+        // console.log(docref);
+        this.toastr.success('Data Deleted Successfully!');
+      });
   }
 }
